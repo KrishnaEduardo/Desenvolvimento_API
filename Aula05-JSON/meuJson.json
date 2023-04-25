@@ -1,0 +1,14 @@
+{
+   "nome" : "Krishna",
+   "idade" : 19,
+   "altura" : 1.91,
+   "aluno" : true,
+   "formaturas" : [ 2010, 2020, 2030 ],
+   "cursos" : ["Curso1", "Curso2", "Curso3"],
+   "cnh" : {"numero" : "9546", "categoria" : "D"}, 
+   "filhos" : [
+        {"nome" : "Seris", "idade" : 22},
+        {"nome" : "Caera", "idade" : 31}
+    ],
+    "endereco" : null  
+}
