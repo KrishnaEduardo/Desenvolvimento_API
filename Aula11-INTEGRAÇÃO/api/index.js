@@ -1,5 +1,9 @@
 const restify = require("restify")
 const errors = require("restify-errors")
+const corsMiddleware = require("restify-cors-middleware2")
+const cors = corsMiddleware({
+    origins: ['*']
+});
 
 const servidor = restify.createServer({
     name : 'loja_dsapi',
@@ -9,6 +13,9 @@ const servidor = restify.createServer({
 servidor.use(restify.plugins.acceptParser(servidor.acceptable));
 servidor.use(restify.plugins.queryParser());
 servidor.use(restify.plugins.bodyParser());
+
+servidor.pre(cors.preflight);
+servidor.use(cors.actual);
 
 servidor.listen(8001, function(){
     console.log("Executando em https://localhost:8001");
@@ -89,13 +96,13 @@ servidor.get('/pedidos/:idPedido', (req, res, next) => {
 });
 
 servidor.get('/pedidosprodutos', (req, res, next) => {
-    knex('pedidos_produtos').then((dados) => {
+    knex('pedido_produto').then((dados) => {
         res.send(dados)
     }, next);
 });
 
 servidor.post('/pedidosprodutos', (req, res, next) => {
-    knex('pedidos_produtos')
+    knex('pedido_produto')
         .insert(req.body)
         .then((dados) => {
             res.send(dados);
@@ -106,7 +113,7 @@ servidor.get('/admin', (req, res, next) => {
     res.send('Bem-Vindo ao painel do administrador!')
 });
 
-servidor.post('/admin/produtos', (req, res, next) => {
+servidor.post('/produtos', (req, res, next) => {
     knex('produtos')
         .insert(req.body)
         .then((dados) => {
@@ -114,7 +121,7 @@ servidor.post('/admin/produtos', (req, res, next) => {
         }, next);
 });
 
-servidor.put('/admin/produtos/:idProduto', (req, res, next) => {
+servidor.put('/produtos/:idProduto', (req, res, next) => {
     const idProduto = req.params.idProduto;
     knex('produtos')
         .where('id', idProduto)
@@ -127,7 +134,7 @@ servidor.put('/admin/produtos/:idProduto', (req, res, next) => {
         }, next);
 });
 
-servidor.del('/admin/produtos/:idProduto', (req, res, next) => {
+servidor.del('/produtos/:idProduto', (req, res, next) => {
     const idProduto = req.params.idProduto;
     knex('produtos')
         .where('id', idProduto)
@@ -140,7 +147,7 @@ servidor.del('/admin/produtos/:idProduto', (req, res, next) => {
         }, next);
 });
 
-servidor.put('/admin/pedidos/:idPedido', (req, res, next) => {
+servidor.put('/pedidos/:idPedido', (req, res, next) => {
     const idPedido = req.params.idPedido;
     knex('pedidos')
         .where('id', idPedido)
@@ -153,7 +160,7 @@ servidor.put('/admin/pedidos/:idPedido', (req, res, next) => {
         }, next);
 });
 
-servidor.del('/admin/pedidos/:idPedido', (req, res, next) => {
+servidor.del('/pedidos/:idPedido', (req, res, next) => {
     const idPedido = req.params.idPedido;
     knex('pedidos')
         .where('id', idPedido)

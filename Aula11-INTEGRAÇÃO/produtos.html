@@ -8,11 +8,25 @@
 </head>
 
 <body>
-    <form action="https://localhost:8001/produtos" method="post">
-        <input type="text" name="nome" placeholder="Nome"> <br>
-        <input type="text" name="preco" placeholder="Preço"> <br>
-        <input type="submit" value="salvar"> <br> 
-    </form>
+    <!-- <form action="http://localhost:8001/produtos" method="POST">  -->
+        <input type="text" name="nome" id="txtNome" placeholder="Nome"> <br>
+        <input type="text" name="preco" id="txtPreco" placeholder="Preço"> <br>
+        <input type="button" onclick="add()" id="BUTAO" value="Salvar"> 
+    <!-- </form> -->
+
+        <hr>
+
+    <button id="btnAtualizar" onclick="ler()">Atualizar</button>
+    <div id="status"></div>
+    <table border="1" id="tblProdutos">
+        <tr>
+            <th>ID</th>
+            <th>NOME</th>
+            <th>PREÇO</th>
+        </tr>
+    </table>
 </body>
 
+
+<script src="script.js"></script>
 </html>
